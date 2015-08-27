@@ -1,0 +1,196 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: svq\n"
+"POT-Creation-Date: 2015-07-17 17:03+0100\n"
+"PO-Revision-Date: 2015-07-17 17:05+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: switch_video_quality.php:51 switch_video_quality.php:72
+msgid "Playlist Position"
+msgstr "Playlist-Position"
+
+#: switch_video_quality.php:52
+msgid "Remove Fields"
+msgstr "Eingabefelder entfernen"
+
+#: switch_video_quality.php:53 switch_video_quality.php:107
+#: switch_video_quality.php:122
+msgid "URL"
+msgstr "URL"
+
+#: switch_video_quality.php:54 switch_video_quality.php:127
+msgid "Label"
+msgstr "Label"
+
+#: switch_video_quality.php:55 switch_video_quality.php:132
+msgid "MIME-Type"
+msgstr "MIME-Typ"
+
+#: switch_video_quality.php:56 switch_video_quality.php:134
+msgid "Select"
+msgstr "Auswählen"
+
+#: switch_video_quality.php:57 switch_video_quality.php:142
+msgid "Duration"
+msgstr "Dauer"
+
+#: switch_video_quality.php:58
+msgid "Height (Sorting)"
+msgstr "Höhe (Sortierung)"
+
+#: switch_video_quality.php:59
+msgid "Choose or upload video (multiple selection with cmd+click/ctrl+click)"
+msgstr ""
+"Auswählen oder Hochladen von Videos (Mehrfachauswahl mit Cmd + Klick/Strg + "
+"Klick)"
+
+#: switch_video_quality.php:60
+msgid "Choose or upload image"
+msgstr "Bild auswählen/hochladen"
+
+#: switch_video_quality.php:61
+msgid ""
+"The url you have entered is invalid/unreachable or the file type is not "
+"supported by your browser."
+msgstr ""
+"Die angegebene URL ist ungültig/nicht erreichbar oder der Dateityp wird von "
+"Ihrem Browser nicht unterstützt."
+
+#: switch_video_quality.php:72
+msgid "Drag &amp; Drop playlist item"
+msgstr "Drag &amp; Drop Playlist-Element"
+
+#: switch_video_quality.php:73
+msgid "Insert empty box after this one"
+msgstr "Leere Box nach dieser einfügen"
+
+#: switch_video_quality.php:74
+msgid "Remove all entries of this playlist item"
+msgstr "Alle Einträge dieses Playlist-Elements entfernen"
+
+#: switch_video_quality.php:75
+msgid "Remove playlist item completely"
+msgstr "Playlist-Element vollständig entfernen"
+
+#: switch_video_quality.php:76
+msgid "Scroll to top"
+msgstr "Nach oben scrollen"
+
+#: switch_video_quality.php:79
+msgid "Set title"
+msgstr "Titel"
+
+#: switch_video_quality.php:81 switch_video_quality.php:86
+#: switch_video_quality.php:91
+msgid "Title"
+msgstr "Titel"
+
+#: switch_video_quality.php:97
+msgid "Set poster image"
+msgstr "Vorschaubild"
+
+#: switch_video_quality.php:99
+msgid "Choose/upload image"
+msgstr "Bild auswählen/hochladen"
+
+#: switch_video_quality.php:99 switch_video_quality.php:114
+msgid "Open the media manager"
+msgstr "Den Medien-Manager öffnen"
+
+#: switch_video_quality.php:113
+msgid "Set video details"
+msgstr "Video-Details"
+
+#: switch_video_quality.php:114
+msgid "Choose/upload videos"
+msgstr "Videos auswählen/hochladen"
+
+#: switch_video_quality.php:115
+msgid "Add input field"
+msgstr "Eingabefeld hinzufügen"
+
+#: switch_video_quality.php:115
+msgid "Adds empty input field to set video url and label manually"
+msgstr ""
+"Fügt ein leeres Eingabefeld hinzu, um Adresse und Titel des Videos manuell "
+"festzulegen"
+
+#: switch_video_quality.php:120
+msgid "Remove fields"
+msgstr "Eingabefelder entfernen"
+
+#: switch_video_quality.php:147
+msgid "Height"
+msgstr "Höhe"
+
+#: switch_video_quality.php:170
+msgid "Set general options"
+msgstr "Allgemeine Einstellungen"
+
+#: switch_video_quality.php:173
+msgid "Turn on/off"
+msgstr "An/Ausschalten"
+
+#: switch_video_quality.php:178
+msgid "Show info-overlay in the player"
+msgstr "Info-Einblendung im Player anzeigen"
+
+#: switch_video_quality.php:182
+msgid "Sort quality levels:"
+msgstr "Qualitätsstufen sortieren:"
+
+#: switch_video_quality.php:183
+msgid "ascending"
+msgstr "aufsteigend"
+
+#: switch_video_quality.php:186
+msgid "descending"
+msgstr "absteigend"
+
+#: switch_video_quality.php:192
+msgid "Custom HTML (inserted between Player and Playlist)"
+msgstr "zusätzliches HTML (wird zwischen Player und Playlist eingefügt)"
+
+#: switch_video_quality.php:299
+msgid "Switch quality"
+msgstr "Qualität ändern"
+
+#: switch_video_quality.php:300
+msgid "Play"
+msgstr "Abspielen"
+
+#: switch_video_quality.php:301
+msgid "Pause"
+msgstr "Pause"
+
+#~ msgid "Choose or upload video (multiple selection with cmd+click)"
+#~ msgstr ""
+#~ "Auswählen oder Hochladen von Videos (Mehrfachauswahl mit Cmd + Klick)"
+
+#~ msgid "Order"
+#~ msgstr "Reihenfolge"
+
+#~ msgid "Add Playlist Item"
+#~ msgstr "Playlist-Element hinzufügen"
+
+#~ msgid "Clear Playlist Item"
+#~ msgstr "Playlist-Element leeren"
+
+#~ msgid "Remove Playlist Item"
+#~ msgstr "Playlist-Element entfernen"
+
+#~ msgid "Mime-Type"
+#~ msgstr "MIME-Typ"
+
+#~ msgid "Set video urls"
+#~ msgstr "Video-URLs festlegen"
