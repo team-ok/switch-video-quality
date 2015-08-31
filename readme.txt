@@ -67,6 +67,10 @@ No, sorry, the plugin is meant to be used with only one player instance per post
 
 == Screenshots ==
 
+1. The player with the switch video quality button, the optional info-overlay and the playlist (twenty-fifteen theme).
+2. Use the normal video shortcode (only width and height attributes needed).
+3. All settings are made within the post edit screen.
+
 
 == Changelog ==
 
