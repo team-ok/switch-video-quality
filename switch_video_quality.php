@@ -2,7 +2,7 @@
 /*
 Plugin Name: Switch Video Quality
 Description: Switch Video Quality adds quality switch functionality to the wordpress video player (choose between different resolutions of a self-hosted html5-compatible video).
-Version: 1.0
+Version: 1.1
 Author: Timo Klemm (team-ok)
 License: GPLv3, mep-feature-sourcechooser.js by John Dyer is originally licensed under the MIT license.
 */
@@ -295,7 +295,7 @@ function wp_video_shortcode_filter($output, $atts) {
 		
 		// plug-in mejs-sourcechooser and infooverlay
 		wp_localize_script( 'wp-mediaelement', '_wpmejsSettings', array(
-		'features' => ['playpause','progress','volume', 'fullscreen', 'sourcechooser', 'svqinfooverlay', 'svqplaylist'],
+		'features' => array('playpause','progress','volume', 'fullscreen', 'sourcechooser', 'svqinfooverlay', 'svqplaylist'),
 		'svq_switch_hover' => __('Switch quality', 'switch-video-quality'),
 		'svq_play' => __('Play', 'switch-video-quality'),
 		'svq_pause' => __('Pause', 'switch-video-quality')

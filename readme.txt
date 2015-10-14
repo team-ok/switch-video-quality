@@ -1,10 +1,10 @@
-=== Switch Video Quality ===
+﻿=== Switch Video Quality ===
 Contributors: team-ok
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9ZJCWAFT4QF2
 Tags: change, bitrate, HD, 4K, multiple resolution, playlist, self-hosted, html5 video
 Requires at least: 3.6
-Tested up to: 4.3
-Stable tag: 1.0
+Tested up to: 4.3.1
+Stable tag: 1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
