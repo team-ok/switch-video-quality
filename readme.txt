@@ -76,3 +76,5 @@ No, sorry, the plugin is meant to be used with only one player instance per post
 
 = 1.0 = 
 * Initial Version
+= 1.1 = 
+* Added compatibility with older php versions (< 5.4)
