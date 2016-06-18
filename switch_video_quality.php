@@ -2,7 +2,7 @@
 /*
 Plugin Name: Switch Video Quality
 Description: Switch Video Quality adds quality switch functionality to the wordpress video player (choose between different resolutions of a self-hosted html5-compatible video).
-Version: 1.1
+Version: 1.2
 Author: Timo Klemm (team-ok)
 License: GPLv3, mep-feature-sourcechooser.js by John Dyer is originally licensed under the MIT license.
 */
@@ -36,9 +36,10 @@ function switch_video_quality_settings() {
 }
 function switch_video_quality_box() {
 	$post_types = get_post_types( array( 'public' => true ) );
+	$excluded = apply_filters( 'svq_exclude_post_types', $excluded = array('attachment', 'revision', 'nav_menu_item') );
 	foreach ( $post_types as $post_type ) {
-		if ( 'attachment' == $post_type || 'revision' == $post_type || 'nav_menu_item' == $post_type) {
-		continue;
+		if ( in_array($post_type, $excluded) ){
+			continue;
 		}
 		add_action( 'admin_enqueue_scripts', 'svq_admin_scripts' );
 		add_meta_box( 'svq_settings', 'Switch Video Quality', 'print_svq_box', $post_type, 'normal', 'high');

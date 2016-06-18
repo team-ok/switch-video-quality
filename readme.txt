@@ -1,9 +1,9 @@
-﻿=== Switch Video Quality ===
+=== Switch Video Quality ===
 Contributors: team-ok
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9ZJCWAFT4QF2
-Tags: change, bitrate, HD, 4K, multiple resolution, playlist, self-hosted, html5 video
+Tags: change, select, bitrate, quality, video, HD, 4K, multiple resolution, playlist, self-hosted, html5 video, mediaelement, mejs, svq
 Requires at least: 3.6
-Tested up to: 4.5
+Tested up to: 4.5.2
 Stable tag: 1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -43,7 +43,7 @@ Switch Video Quality adds a quality switch button to the native wordpress video 
 
 == Installation ==
 
-* Upload the unzipped folder `switch-video-quality` to the `/wp-content/plugins/ directory.
+* Upload the unzipped folder `switch-video-quality` to the `/wp-content/plugins/` directory.
 * Activate the plugin through the *Plugins* menu in WordPress.
 * Switch Video Quality has no global settings. It all happens in the post editing screen.
 
@@ -64,6 +64,19 @@ At page load the plugin checks the types of html5 video your browser can play an
 = Can I use more than one player on the same post/page?  =
 
 No, sorry, the plugin is meant to be used with only one player instance per post/page. But you can have multiple posts (each with Switch Video Quality activated) displayed on a page, e.g., if you query by a certain category or tag.
+
+= I don't want to use Switch Video Quality with a certain post type. How can I remove it from the admin screen of that post type? =
+
+There's a filter hook for doing that. Copy the following code into your functions.php and change the content of the `$to_be_excluded array with the registered names of the post types you want to exclude:
+```
+add_filter('svq_exclude_post_types', 'custom_svq_exclude_post_types');
+function custom_svq_exclude_post_types($excluded){
+	$to_be_excluded = array('post_type_name', 'another_post_type_name');
+	$excluded = array_merge($excluded, $to_be_excluded);
+	return $excluded;
+}
+```
+If you don't know the registered name of a custom post type: it's shown in your browser's adress bar when you look at the post type's managing screen (after `edit.php?post_type=`).
 
 == Screenshots ==
 
