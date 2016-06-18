@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: change, select, bitrate, quality, video, HD, 4K, multiple resolution, playlist, self-hosted, html5 video, mediaelement, mejs, svq
 Requires at least: 3.6
 Tested up to: 4.5.2
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
