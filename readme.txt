@@ -95,3 +95,5 @@ If you don't know the registered name of a custom post type: it's shown in your 
 * Initial Version
 = 1.1 = 
 * Added compatibility with older php versions (< 5.4)
+= 1.2 =
+* Added a filter to change the post types switch video quality is connected with (see FAQ) 
