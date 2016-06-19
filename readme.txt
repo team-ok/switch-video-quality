@@ -67,7 +67,7 @@ No, sorry, the plugin is meant to be used with only one player instance per post
 
 = I don't want to use Switch Video Quality with a certain post type. How can I remove it from the admin screen of that post type? =
 
-There's a filter hook for doing that. Copy the following code into your functions.php and change the content of the `$to_be_excluded` array with the registered names of the post types you want to exclude:
+There's a filter hook for doing that. Copy the following code into your functions.php and replace the content of the `$to_be_excluded` array with the registered names of the post types you want to exclude:
 
 
     add_filter('svq_exclude_post_types', 'custom_svq_exclude_post_types');
