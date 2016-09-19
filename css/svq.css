@@ -1,3 +1,14 @@
+.svq *, .svq_playlist * {
+    font-family: Open Sans, Helvetica, sans-serif;
+}
+.svq button, .svq input[type], .svq textarea, .svq label {
+  box-shadow: none;
+  text-shadow: none;
+  text-decoration: none;
+  border-radius: 0;
+  border: none;
+  outline: none;
+}
 .svq_clearix:before, .svq_clearfix:after { 
     content: " ";
     display: table;
@@ -5,20 +16,24 @@
 .svq_clearfix:after { 
     clear: both; 
 }
-.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector {
+.svq .mejs-controls .mejs-sourcechooser-button button {
+  background-image: url("../img/svq_controls.png");
+  background-position: 0 0;
+}
+.svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector {
     right: 0;
     width: auto;
     padding: 0;
     border: none;
 }
-.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li {
+.svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li {
     margin: 0;
     border-bottom: 2px solid #ccc;
 }
-.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li:last-child {
+.svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li:last-child {
     border: none;
 }
-.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li label {
+.svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li label {
     width: 100%;
     font-size: 1em;
     line-height: 1em;
@@ -29,22 +44,30 @@
     -ms-hyphens: none;
     hyphens: none;
 }
-.mejs-sourcechooser-selector input[type="radio"] {
+.svq .mejs-sourcechooser-selector input[type="radio"] {
     display: none;
 }
-.mejs-sourcechooser-selector input[type="radio"]:checked + label {
+.svq .mejs-sourcechooser-selector input[type="radio"]:checked + label {
     background-color: #0074a2;
 }
-.mejs-sourcechooser-selector label > sup {
+.svq .mejs-sourcechooser-selector label > sup {
   color: crimson;
   margin-left: 2px;
 }
+.svq .mejs-poster {
+  background-size: cover;
+}
 .svq-info {
+  color: #fff;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
   background-color: rgba(34,34,34,0.9);
   height: auto;
   bottom: 0;
   left: 0;
   position: absolute;
+  padding: 1% 0;
   margin-bottom: 30px;
   width: 100%;
   visibility: hidden;
@@ -61,35 +84,45 @@
     padding: 0;
     position: relative;
     width: 10%;
+    max-width: 100px;
 }
 .svq-info-playpause > button {
-  background: url("../img/playpause.png") no-repeat scroll 0 0 transparent;
-  border: 0 none;
-  cursor: pointer;
-  display: block;
-  font-size: 0;
-  height: 0;
-  line-height: 0;
-  margin: 0 5px;
-  padding: 0;
-  text-decoration: none;
-  width: 100%;
-  position: relative;
-  background-size: 200%;
-  padding-bottom: 100%;
+  /* 
+  responsive css sprite background image
+  http://www.stolzenhain.net/en/responsive-spritemaps#relative-percentage 
+  */
+    background-image: url("../img/svq_overlay_icons.png");
+    background-color: transparent;
+    /*background-size: 1282.0512820512822% auto;*/
+    background-size: cover;
+    background-position: 21.69197396963124% 0;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    margin: 0 auto;
+    padding: 50% 0 0;
+    position: relative;
+    width: 39%;
+}
+.svq-info-playpause > button.svq_playing {
+    background-position: 43.7636761487965% 0;
+    /*background-size: 1162.7906976744184% auto;*/
+    width: 43%;
+}
+.svq.svg .svq-info-playpause > button {
+    background-image: url("../img/svq_overlay_icons.svg");
 }
 .svq-info > div {
     float: left;
+    box-sizing: border-box;
 }
 .svq-info-text {
-    color: #fff;
     font-size: 14px;
     position: relative;
-    padding: 2% 3%;
     width: 90%;
-}
-.svq-info-text *, .svq_playlist * {
-    font-family: Open Sans, Helvetica, sans-serif;
 }
 .svq_custom_html {
     min-height: 50px;
@@ -97,39 +130,42 @@
 .svq-info-title {
     font-weight: bold;
 }
-.svq-info-title2, .svq-info-title3, .svq-info-duration {
+.svq-info-text > div:not(:first-child), .svq_playlist-item > div > span:not(:first-child) {
     font-size: 80%;
+}
+.svq-info-ext-link a {
+  color: #0074a2;
 }
 .svq_playlist {
     margin-top: 50px;
 }
 .svq_playlist > ul {
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-flex-flow: row wrap;
     -ms-flex-flow: row wrap;
     flex-flow: row wrap;
+    margin: 0 -15px;
 }
 .svq_playlist-item {
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
     display: inline-block;
     float: left;
-    max-width: 33.33%;
+    width: 33.33%;
     padding: 0 15px;
     margin-bottom: 15px;
     font-size: 14px;
-}
-.svq_playlist-item:hover {
-    cursor: pointer;
+    box-sizing: border-box;
 }
 @media (max-width: 980px) {
     .svq_playlist-item {
-        max-width: 50%;
+        width: 50%;
     }
 }
 .svq_playlist-item img {
     width: 100%;
     height: auto;
+    object-fit: cover;
 }
 .svq_playlist-item span {
     display: block;
@@ -144,17 +180,15 @@
     font-weight: bold;
     margin-top: 3px;
 }
-.svq_playlist_item_title2, .svq_playlist_item_title3, .svq_playlist_item_duration {
-    font-size: 80%;
-}
 .svq_playlist_item_poster {
     position: relative;
     border: 1px solid #e4e4e4;
     padding: 3px;
+    cursor: pointer;
 }
 span.svq_playlist_item_poster::after {
   content: '';
-  background: url("../img/playlist_play.png");
+  background: url("../img/svq_playlist_play.png");
   width: 50px;
   height: 50px;
   position: absolute;
@@ -169,4 +203,139 @@ span.svq_playlist_item_poster::after {
 }
 span.svq_playlist_item_poster:hover::after {
     background-position: 0 -50px;
+}
+.svq_playlist_item_ext_link a {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+.svq-embed-code-layer{
+  color: #888;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.svq-embed-toggle {
+    color: #fff;
+    left: 3%;
+    max-width: 35px;
+    position: absolute;
+    right: auto;
+    top: 3%;
+    visibility: hidden;
+    width: 4%;
+    z-index: 1;
+}
+.svq-embed-toggle.active {
+  right: 3%;
+  left: auto;
+}
+.svq-embed-toggle button {
+    background-image: url("../img/svq_overlay_icons.png");
+    /*background-size: 1000% auto;*/
+    background-size: cover;
+    background-color: transparent;
+    background-position: 66.66666666666666% 0;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 0;
+    margin: 0;
+    padding: 100% 0 0;
+    width: 100%;
+}
+.svq.svg .svq-embed-toggle button {
+  background-image: url('../img/svq_overlay_icons.svg');
+}
+.svq-embed-toggle.active button {
+  /*background-size: 1282.0512820512822% auto;*/
+  background-position: 0 0;
+  padding: 128.2051282051282% 0 0;
+}
+.svq-embed-toggle label {
+  display: block;
+  font-size: 14px;
+}
+.svq-embed-toggle.active label {
+  display: none;
+}
+.svq-embed-code {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ccc;
+  padding: 5%;
+  box-sizing: border-box;
+}
+.svq-embed-code > * {
+  flex: 0 0 100%;
+}
+.svq-embed-code span, .svq-embed-code textarea, .svq-embed-code input {
+  font-size: 15px;
+} 
+.svq-embed-code label {
+  cursor: pointer;
+}
+.svq-embed-code label span {
+  color: #0074a2;
+  padding-right: 5px;
+}
+.svq-embed-code textarea {
+  cursor: text;
+  line-height: 20px;
+  background-color: transparent !important;
+  color: inherit;
+  resize: none;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  overflow: auto;
+  width: 100%;
+  padding: 1% 0;
+}
+.svq-embed-code textarea:focus {
+  background-color: transparent !important;
+  box-shadow: none;
+  outline: none;
+}
+.svq-embed-code form {
+  padding: 1% 0;
+}
+.svq_embed_custom_size input[type="text"] {
+  max-width: 40%;
+  color: inherit;
+  padding: 5px;
+  height: auto;
+  width: auto;
+  border: 1px solid #ccc;
+}
+.svq_embed_custom_size input[type="text"]:focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+}
+.svq-embed {
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  overflow: hidden;
+}
+.svq-embed .wp-video {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+  position: fixed !important;
+  z-index: 999999 !important;
+}
+.svq-embed .wp-video-shortcode, .svq-embed .mejs-layer {
+  width: 100% !important;
+  height: 100% !important;
 }

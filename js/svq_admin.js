@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
       var cnt = $('.svq_metabox').length;
       var admin_bar = ($('#wpadminbar').css('position') == 'fixed') ? $('#wpadminbar').height() : 0;
       //hide the remove button when there's only one metabox
-      if (cnt == 1) {
+      if (cnt === 1) {
         $('span.remove_svq_item').css('display', 'none');
       }
 
@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
          $('div.svq_metabox').each(function(index) {
               var playlist_number = index + 1;
               //set position number to text and data-attribute
-              $(this).find('.svq_playlist_position').text(svq_admin_l10n.playlistPosition + ' ' + playlist_number).data('position', playlist_number);
+              $(this).find('.svq_playlist_position').text( (playlist_number < 10 ? '0'+playlist_number : playlist_number) ).data('position', playlist_number);
                 //update name attributes for correct saving
                 var input = $(this).find('input, select').not('input[type="button"]');
                 input.each(function() {
@@ -20,46 +20,87 @@ jQuery(document).ready(function($) {
                 });
           });
       }
-        function clear_item(tobeCleared) {
-              tobeCleared.find('input[type="checkbox"]').prop('checked', false);
-              tobeCleared.find('input[type="text"]').val('');
-              tobeCleared.find('div.svq_poster_thumb').remove();
-              tobeCleared.find('div.svq_video_qualities').remove();
-        }  
-        $('.add_svq_item').click(function() {
-            var toClone = $(this).closest('div.svq_metabox');
-            var cloned = toClone.clone(true);
-            clear_item(cloned);
-            cloned.insertAfter(toClone);
-            $('span.remove_svq_item').css('display', 'inline-block');
-            update_playlist_position_number();
-            $('html, body').animate({scrollTop: cloned.offset().top - admin_bar }, 'slow');
-            cnt++;
+      function clear_item(tobeCleared) {
+            tobeCleared.find('input[type="checkbox"]').prop('checked', false);
+            tobeCleared.find('input[type="text"]').val('');
+            tobeCleared.find('span.svq_accordion_label').text('');
+            tobeCleared.find('div.svq_poster_thumb').remove();
+            tobeCleared.find('div.svq_video_qualities').remove();
+      }
+      function input_html(curr_position, input_cnt){
+        var name_url = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_url]';
+        var name_label = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_label]';
+        var name_order = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_order]';
+        var name_mime = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_mime]';
+        var name_length = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_length]';
+        var html = 
+          '<div class="svq_video_qualities">' + 
+          '<span class="clear_video_input" title="' + svq_admin_l10n.removeFields + '"></span>' +
+          '<br />' +
+          '<div><label>&nbsp;' + svq_admin_l10n.url + '&nbsp;<input class="video_url_input" type="text" size="80" value="" name="' + name_url + '" /></label></div>' +
+          '<div><label>&nbsp;' + svq_admin_l10n.label + '&nbsp;<input class="video_quality_label" type="text" size="5" value="" name="' + name_label  + '" /></label></div>' +
+          '<div><label>&nbsp;' + svq_admin_l10n.duration + '&nbsp;<input class="video_quality_duration" type="text" size="8" value="" name="' + name_length + '" /></label></div>' +
+          '<input class="video_quality_mime" type="hidden" name="' + name_mime  + '" value="" />' +
+          '<input class="video_quality_order" type="hidden" name="' + name_order + '" value="" />' +
+          '</div>';
+        return html;
+      }
+      // handle playlist item toolbar click events
+      $('.add_svq_item').click(function(event) {
+        event.stopPropagation();
+        var toClone = $(this).closest('div.svq_metabox');
+        var cloned = toClone.clone(true, true);
+        clear_item(cloned);
+        cloned.insertAfter(toClone);
+        $('span.remove_svq_item').css('display', 'inline-block');
+        update_playlist_position_number();
+        var position = cloned.find('.svq_playlist_position').data('position') - 1;
+        $('#svq_metabox_container').accordion('refresh').accordion('option', 'active', position).one('accordionactivate', function(){
+          console.log('Activated');
+          $('html, body').animate({scrollTop: cloned.offset().top - admin_bar }, 'slow');
         });
-        $('span.remove_svq_item').on('click', function() {
-                tobeRemoved = $(this).closest('.svq_metabox');
-                tobeRemoved.hide('slow', function() { tobeRemoved.remove(); update_playlist_position_number(); });
-                cnt--;
-                if (cnt == 1) {
-                  $('span.remove_svq_item').css('display', 'none');  
-                }
+        cnt++;
+      });
+      $('.remove_svq_item').on('click', function(event) {
+        event.stopPropagation();
+        tobeRemoved = $(this).closest('.svq_metabox');
+        tobeRemoved.hide('slow', function() { 
+          tobeRemoved.remove();
+          update_playlist_position_number();
         });
-        $('span.clear_svq_item').click(function() {
-              var tobeCleared = $(this).closest('.svq_metabox');
-              clear_item(tobeCleared);
-        });
-        $('.svq_sortable').sortable({
-         opacity: 0.6,
-         revert: true,
-         cursor: 'move',
-         handle: '.svq_handle',
-         update: function(event, ui) {
-                   update_playlist_position_number();
-                 }
-        });
-        $('.svq_scrolltotop').on('click', function(){
-          $('html, body').animate({scrollTop: 0}, 'fast');
-        });
+        cnt--;
+        if (cnt == 1) {
+          $('span.remove_svq_item').css('display', 'none');  
+        }
+      });
+      $('.clear_svq_item').click(function(event) {
+        event.stopPropagation();
+        var tobeCleared = $(this).closest('.svq_metabox');
+        clear_item(tobeCleared);
+      });
+      $('.svq_playlist_position').on('click', function(event){
+          event.stopPropagation();
+      });
+      $('input.svq_title_1').on('change', function(){
+        var labelText = $(this).val();
+        $(this).closest('.svq_metabox').find('.svq_accordion_label').text(labelText);
+      });
+      // drag&drop and accordion functionality
+      $('#svq_metabox_container').sortable({
+        opacity: 0.6,
+        revert: true,
+        cursor: 'move',
+        handle: '.svq_handle',
+        update: function(event, ui) {
+          update_playlist_position_number();
+        }
+      });
+      $('#svq_metabox_container').accordion({
+        header: '.svq_metabox_header',
+        icons:  false,
+        heightStyle: 'content',
+        collapsible: true
+      });
 // Video upload
     //variables have to be defined outside of the click-function for correct assignment when reopening the meta frame
     var meta_video_frame;
@@ -80,7 +121,9 @@ jQuery(document).ready(function($) {
         // Sets up the media library frame
             meta_video_frame = wp.media.frames.meta_video_frame = wp.media({
             title: svq_admin_l10n.mmVideo,
-            library: { type: 'video' },
+            library: {
+              type: ['video/mp4', 'video/webm', 'video/ogv']
+            },
             multiple: true
         });
         // Runs when a video is selected
@@ -91,27 +134,13 @@ jQuery(document).ready(function($) {
             var input_cnt = vid_mamapapa.find('.video_url_input').length;
             // Creates video input fields and sends the attachment URL, height (as label and order number) and mime types to them
             $.each(media_attachment, function(index) {
-              var name_url = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_url]';
-              var name_label = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_label]';
-              var name_order = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_order]';
-              var name_mime = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_mime]';
-              var name_length = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_length]';
-              var duration = this.fileLength;
-              $('<div class="svq_video_qualities">' +
-                '<span class="clear_video_input" title="' + svq_admin_l10n.removeFields + '"></span>' +
-                '<div><label>&nbsp;' + svq_admin_l10n.url + '&nbsp;<input class="video_url_input" type="text" size="80" value="' + this.url + '" name="' + name_url + '" /></label></div>' +
-                '<div><label>&nbsp;' + svq_admin_l10n.label + '&nbsp;<input class="video_quality_label" type="text" size="5" value="' + this.height + 'p" name="' + name_label + '" /></label></div>' +
-                '<div><label>&nbsp;' + svq_admin_l10n.mimeType + '&nbsp;<select class="video_quality_mime" required name="' + name_mime  + '">' +
-                  '<option value="">' + svq_admin_l10n.select + '</option>' +
-                  '<option value="video/mp4">video/mp4</option>' +
-                  '<option value="video/webm">video/webm</option>' +
-                  '<option value="video/ogg">video/ogg</option>' +
-                '</select></label></div>' +
-                '<div><label>&nbsp;' + svq_admin_l10n.duration + '&nbsp;<input class="video_quality_duration" type="text" size="8" value="' + duration + '" name="' + name_length + '" /></label></div>' +
-                '<div><label>&nbsp;' + svq_admin_l10n.order + '&nbsp;<input class="video_quality_order" type="text" size="5" value="' + this.height + '" name="' + name_order + '" /></label></div>' +
-                '</div>')
-              .appendTo(vid_mamapapa).find('select option[value="' + this.mime + '"]').attr('selected', 'selected');
-
+              var video_input = $(input_html(curr_position, input_cnt));
+              video_input.find('.video_url_input').val(this.url);
+              video_input.find('.video_quality_label').val(this.height + 'p');
+              video_input.find('.video_quality_duration').val(this.fileLength);
+              video_input.find('.video_quality_mime').val(this.mime);
+              video_input.find('.video_quality_order').val(this.height);
+              video_input.appendTo(vid_mamapapa);
               input_cnt++;
             });
         });
@@ -121,28 +150,11 @@ jQuery(document).ready(function($) {
   $('.svq_vid_manual').click(function() {
       var curr_position = $(this).closest('div.svq_metabox').find('span.svq_playlist_position').data('position');
       var input_cnt = $(this).parent().find('.video_url_input').length;
-      var name_url = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_url]';
-      var name_label = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_label]';
-      var name_order = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_order]';
-      var name_mime = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_mime]';
-      var name_length = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_length]';
-      $('<div class="svq_video_qualities">' + 
-        '<span class="clear_video_input" title="' + svq_admin_l10n.removeFields + '"></span>' +
-        '<div><label>&nbsp;' + svq_admin_l10n.url + '&nbsp;<input class="video_url_input" type="text" size="80" value="" name="' + name_url + '" /></label></div>' +
-        '<div><label>&nbsp;' + svq_admin_l10n.label + '&nbsp;<input class="video_quality_label" type="text" size="5" value="" name="' + name_label  + '" /></label></div>' +
-        '<div><label>&nbsp;' + svq_admin_l10n.mimeType + '&nbsp;<select class="video_quality_mime" required name="' + name_mime  + '">' +
-            '<option value="">' + svq_admin_l10n.select + '</option>' +
-            '<option value="video/mp4">video/mp4</option>' +
-            '<option value="video/webm">video/webm</option>' +
-            '<option value="video/ogg">video/ogg</option>' +
-          '</select></label></div>' +
-        '<div><label>&nbsp;' + svq_admin_l10n.duration + '&nbsp;<input class="video_quality_duration" type="text" size="8" value="" name="' + name_length + '" /></label></div>' +
-        '<div><label>&nbsp;' + svq_admin_l10n.order + '&nbsp;<input class="video_quality_order" type="text" size="5" value="" name="' + name_order + '" /></label></div>' +
-        '</div>')
-        .appendTo( $(this).parent() );
+      var video_input = input_html(curr_position, input_cnt);
+      $(video_input).appendTo( $(this).parent() );
   });
 
-// get height of video from its metadata (video has to be partially loaded)
+// get height and duration of video from its metadata (video has to be partially loaded)
   function getVideoHeight(wrapper, url, callback){
     var video=document.createElement("video");
     video.style.display = "none";
@@ -188,12 +200,13 @@ jQuery(document).ready(function($) {
         getVideoHeight(wrapper, url, function(h,d){
           wrapper.find('.video_quality_order').val(h);
           wrapper.find('.video_quality_label').val(h + 'p');
-          var minutes = Math.floor(d / 60);
+          var hours = Math.floor(d / 3600);
+          var minutes = Math.floor(d % 3600 / 60);
           var seconds = Math.round(d % 60);
-          var duration = minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+          var duration = (hours > 0 ? hours + ':' : '') + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
           wrapper.find('.video_quality_duration').val(duration);
         });
-        wrapper.find('select option[value="' + fileType + '"]').attr('selected', 'selected');
+        wrapper.find('input.video_quality_mime').val(fileType);
       }
     }
   });
@@ -201,7 +214,17 @@ jQuery(document).ready(function($) {
 
 // Clear video data input
     $('.svq_metabox').on('click', 'span.clear_video_input', function() {
-      $(this).parent().remove();
+      var tobeCleared = $(this).parent();
+      var vid_qual_boxes = tobeCleared.siblings('.svq_video_qualities');
+      tobeCleared.remove();
+      vid_qual_boxes.each(function(index) {
+        var input = $(this).find('input');
+        input.each(function(){
+          var name = $(this).attr('name');
+          var new_name = name.replace(/svq_video\]\[(.+?)\]/, 'svq_video][' + index + ']');
+          $(this).attr('name', new_name);
+        });
+      });
     });
 
 

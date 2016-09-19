@@ -1,7 +1,7 @@
 // Source Chooser Plugin
 (function($) {
     $.extend(mejs.MepDefaults, {
-        sourcechooserText: _wpmejsSettings.svq_switch_hover
+        sourcechooserText: _svqSettings.svq_switch_hover
     });
     $.extend(MediaElementPlayer.prototype, {
         buildsourcechooser: function(player, controls, layers, media) {
@@ -27,7 +27,7 @@
             })
 
             // handle clicks to the radio buttons
-            .delegate('input[type=radio]', 'click', function() {
+            .on('click', 'input[type=radio]', function() {
                 src = this.value;
                 if (media.currentSrc != src) {
                     currentTime = media.currentTime;
@@ -42,6 +42,17 @@
                         }
                     });
                 }
+            });
+            $(media).on('loadedmetadata', function(){
+                var currentQuality = this.videoHeight;
+                var backPos = '0 0';
+                if (currentQuality >= 720){
+                    backPos = '-16px 0';
+                    if (currentQuality >= 2160){
+                        backPos = '-32px 0';
+                    }
+                }
+                player.sourcechooserButton.find('button').css('background-position', backPos);
             });
         // add to list at pageload     
         t.refresh_source_list();
@@ -71,13 +82,13 @@
                             if (playable !== undefined && src.type !== playable) {
                             continue;
                             }
-                            t.addSourceButton(src.src, src.title, src.dataset.order, curry == src.src);
+                            t.addSourceButton(src.src, src.title, src.dataset.order, curry == src.src, i);
                             playable = src.type;
                         }
                 }
             });
     },
-            addSourceButton: function(src, label, height, isCurrent) {
+            addSourceButton: function(src, label, height, isCurrent, index) {
                 var t = this;
                 if (label === '') {
                     label = src.split('/').pop().split('.')[0];
@@ -91,8 +102,8 @@
                 }
                 t.sourcechooserButton.find('ul').append(
                     $('<li>' +
-                        '<input type="radio" name="' + t.id + '_sourcechooser" id="' + t.id + '_sourcechooser_' + label + '" value="' + src + '" ' + (isCurrent ? 'checked="checked"' : '') + ' />' +
-                        '<label for="' + t.id + '_sourcechooser_' + label + '">' + label + flag + '</label>' +
+                        '<input type="radio" name="' + t.id + '_sourcechooser" id="' + t.id + '_sourcechooser_' + label + '_' + index + '" value="' + src + '" ' + (isCurrent ? 'checked="checked"' : '') + ' />' +
+                        '<label for="' + t.id + '_sourcechooser_' + label + '_' + index + '">' + label + flag + '</label>' +
                         '</li>')
                 );
                 t.adjustSourcechooserBox();
