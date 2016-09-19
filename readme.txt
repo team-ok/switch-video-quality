@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: change, choose, select, quality, resolution, self-hosted, video, stream, player, wordpress, media, library, playlist, responsive, embed, iframe, bitrate, HD, 4K, html5, mediaelement, mejs, svq
 Requires at least: 3.6
 Tested up to: 4.6.1
-Stable tag: 1.3
+Stable tag: 1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
