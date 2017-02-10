@@ -5,6 +5,8 @@
 ## Description
 Switch Video Quality adds a quality switch button to the native wordpress video player (mediaelement.js), that allows to choose between different resolutions (e.g., SD and HD) and/or formats (mp4, webm, ogv) of a self-hosted html5-compatible video. Additionally it provides an iframe embed code to let your viewers embed your video into their website (optional).
 
+### [Switch Video Quality](https://wordpress.org/plugins/switch-video-quality/) on wordpress.org
+
 ### Features:
 * serve your videos in **multiple qualities** to let your viewers choose (just like youtube or vimeo)
 * upload your video files directly to the wordpress media library or use a separate web server to host your files (direct URLs have to be entered manually)
