@@ -15,7 +15,7 @@
 <body id="body" <?php post_class( 'svq-embed', $currentID ); ?>> 
 <?php
 //trigger video shortcode callback
-echo wp_video_shortcode();
+echo wp_video_shortcode( array() );
 
 wp_footer(); 
 ?> 

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Switch Video Quality
 Description: Switch Video Quality adds quality switch functionality to the wordpress video player to let you choose between different resolutions of a (self-hosted) html5-compatible video.
-Version: 1.3
+Version: 1.4
 Author: Timo Klemm (team-ok)
 Text Domain: switch-video-quality
 Domain Path: /lang
@@ -25,7 +25,7 @@ function prowp_install() {
     }
 }
 //Switch Video Quality Version Number
-define( 'SVQ_VERSION', '1.3' );
+define( 'SVQ_VERSION', '1.4' );
 
 add_action( 'load-post.php', 'switch_video_quality_settings' );
 add_action( 'load-post-new.php', 'switch_video_quality_settings' );
@@ -263,23 +263,34 @@ function omit_empty_items($input) {
 }
 
 function svq_meta_save( $post_id ) {
+
     // Checks save status
     $is_autosave = wp_is_post_autosave( $post_id );
     $is_revision = wp_is_post_revision( $post_id );
-    $is_valid_nonce = ( isset( $_POST[ 'svq_box_nonce' ] ) && wp_verify_nonce( $_POST[ 'svq_box_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+    $is_valid_nonce = ( isset( $_POST[ 'svq_box_nonce' ] ) && wp_verify_nonce( $_POST[ 'svq_box_nonce' ], basename( __FILE__ ) ) ) ? true : false;
  
     // Exits script depending on save status
     if ( $is_autosave || $is_revision || !$is_valid_nonce ) {
         return;
     }
+    
     // Check the user's permissions.
     if ( !current_user_can( 'edit_post', $post_id ) ) {
     	return;
     }
-   	$svq_metadata = (!empty($_POST['svq'])) ? omit_empty_items($_POST['svq']) : '';
-	(!empty($svq_metadata)) ? update_post_meta($post_id, 'svq_metadata', $svq_metadata) : delete_post_meta( $post_id, 'svq_metadata');
-	(!empty($_POST['svq_custom_html'])) ? update_post_meta($post_id, 'svq_custom_html', $_POST['svq_custom_html']) : delete_post_meta( $post_id, 'svq_custom_html');
-	(!empty($_POST['svq_options'])) ? update_post_meta($post_id, 'svq_options', $_POST['svq_options']) : delete_post_meta( $post_id, 'svq_options');
+
+   	$svq_metadata = ( isset( $_POST['svq'] ) ) ? omit_empty_items( $_POST['svq'] ) : null;
+
+	if ( isset( $svq_metadata ) ){
+		update_post_meta( $post_id, 'svq_metadata', $svq_metadata );
+	}
+	if ( isset( $_POST['svq_custom_html'] ) ){
+		update_post_meta( $post_id, 'svq_custom_html', $_POST['svq_custom_html'] );
+	}
+	if ( isset( $_POST['svq_options'] ) ){
+		update_post_meta( $post_id, 'svq_options', $_POST['svq_options'] );
+	}
+
 }
 add_action( 'save_post', 'svq_meta_save' );
 
