@@ -2,7 +2,7 @@
 /*
 Plugin Name: Switch Video Quality
 Description: Switch Video Quality adds quality switch functionality to the wordpress video player to let you choose between different resolutions of a (self-hosted) html5-compatible video.
-Version: 1.4
+Version: 1.4.1
 Author: Timo Klemm (team-ok)
 Text Domain: switch-video-quality
 Domain Path: /lang
@@ -25,7 +25,7 @@ function prowp_install() {
     }
 }
 //Switch Video Quality Version Number
-define( 'SVQ_VERSION', '1.4' );
+define( 'SVQ_VERSION', '1.4.1' );
 
 add_action( 'load-post.php', 'switch_video_quality_settings' );
 add_action( 'load-post-new.php', 'switch_video_quality_settings' );
@@ -142,7 +142,6 @@ function svq_box_html($playlist_number, $cnt, $svq) { ?>
 						foreach ($svq['svq_video'] as $svq_video) { ?>
 							<div class="svq_video_qualities">
 								<span class="clear_video_input" title="<?php _e('Remove fields', 'switch-video-quality'); ?>"></span>
-								<br />
 								<div>
 									<label><?php _e('URL', 'switch-video-quality'); ?>
 										<input class="video_url_input" type="text" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_url]" value="<?php echo (!empty($svq_video['svq_url']) ? esc_url($svq_video['svq_url']) : ''); ?>" size="80" />
@@ -336,7 +335,7 @@ function svq_embeds_loader($template){
 ****************HTML and JSON Frontend Output****************
 ************************************************************/
 
-add_filter( 'wp_video_shortcode_override', 'svq_video_shortcode_output', 10, 4 );
+add_filter( 'wp_video_shortcode_override', 'svq_video_shortcode_output', 99, 4 );
 function svq_video_shortcode_output($output, $attr, $content, $instance){
 	global $content_width;
 	//check if current query is an embed (= url with 'svq_embed_id' query var)

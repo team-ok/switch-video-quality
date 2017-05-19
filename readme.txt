@@ -3,8 +3,8 @@ Contributors: team-ok
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9ZJCWAFT4QF2
 Tags: change, choose, select, quality, resolution, self-hosted, video, stream, player, wordpress, media, library, playlist, responsive, embed, iframe, bitrate, HD, 4K, html5, mediaelement, mejs, svq
 Requires at least: 3.6
-Tested up to: 4.7.4
-Stable tag: 1.4
+Tested up to: 4.7.5
+Stable tag: 1.4.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -176,3 +176,6 @@ If you want to put it somewhere else, use the filter hook 'svq_locate_template'.
 * Changed the filter hook used for filtering the video shortcode. The plugin now uses 'wp_video_shortcode_override' which allows to completely overwrite the default wordpress video shortcode output.
 = 1.4 =
 * Fixed a bug in the post metadata saving process that could lead to metadata deletion in cases where the post was being updated from outside the post edit screen.
+= 1.4.1 =
+* Set priority of wp_video_shortcode_override filter hook to a higher value (lower priority).
+* Some minor CSS improvements.

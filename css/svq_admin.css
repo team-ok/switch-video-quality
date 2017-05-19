@@ -1,22 +1,22 @@
 /****************************Admin*******************************/
 
-.svq_metabox {
+#svq_settings .svq_metabox {
 	margin: 25px 0;
 }
-.svq_metabox p {
+#svq_settings .svq_metabox p {
 	font-weight: bold;
 	margin: 0;
 }
-.svq_metabox p > span {
+#svq_settings .svq_metabox p > span {
 	font-weight: normal;
 }
-.svq_metabox .button {
+#svq_settings .svq_metabox .button {
 	background-color: #dddddd;
 }
-.svq_metabox input {
+#svq_settings .svq_metabox input {
 	max-width: 100%;
 }
-.svq_input_wrap {
+#svq_settings .svq_input_wrap {
 	padding: 5px;
 	background-color: #F7F7F7;
 	margin: 0 0 5px;
@@ -28,45 +28,45 @@
 	vertical-align: middle;
 	margin-right: 5px;
 }
-.svq_metabox_header {
+#svq_settings .svq_metabox_header {
     background-color: #bbb;
     display: -ms-flexbox;
     display: flex;
 }
-.svq_metabox_header.ui-accordion-header-active{
+#svq_settings .svq_metabox_header.ui-accordion-header-active{
     background-color: #0074a2;
 }
-.svq_metabox_header > span {
+#svq_settings .svq_metabox_header > span {
 	color: #fff;
 	display: inline-block;
     padding: 5px 10px;
     border-right: 1px solid rgba(255, 255, 255, 0.5);
     cursor: pointer;
 }
-span.svq_playlist_position {
+#svq_settings span.svq_playlist_position {
 	cursor: move;
 }
-span.svq_accordion {
+#svq_settings span.svq_accordion {
 	-ms-flex-positive: 2;
 	flex-grow: 2;
 }
-span.svq_accordion span:first-child {
+#svq_settings span.svq_accordion span:first-child {
 	-ms-transform: rotate(0deg);
 	transform: rotate(0deg);
 	transition: transform 0.2s linear 0s
 }
-.ui-accordion-header-active span.svq_accordion span:first-child {
+#svq_settings .ui-accordion-header-active span.svq_accordion span:first-child {
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
 }
-.svq_metabox_header span:hover {
+#svq_settings .svq_metabox_header span:hover {
     color: #23282d;
 }
-.svq_poster_thumb > img {
+#svq_settings .svq_poster_thumb > img {
 	max-width: 160px;
 	max-height: 90px;
 }
-.clear_video_input {
+#svq_settings .clear_video_input {
 	cursor: pointer;
 	background-image: url('../img/svq_remove.gif');
 	background-size: contain;
@@ -75,21 +75,27 @@ span.svq_accordion span:first-child {
 	display: inline-block;
 	width: 10px;
 	height: 10px;
+	position: absolute;
+    top: 50%;
+    left: 10px;
+    margin-top: -6px;
 }
-.svq_title > div, .svq_ext_link > div, .svq_video_qualities > div {
+#svq_settings .svq_title > div, #svq_settings .svq_ext_link > div, #svq_settings .svq_video_qualities > div {
 	display: inline-block;
 	max-width: 100%;
 	margin-right: 15px;
 }
-.svq_video_qualities {
+#svq_settings .svq_video_qualities {
 	margin: 0 -5px;
 	padding: 5px;
+	padding-left: 30px;
+	position: relative;
 	border-top: 3px solid #fff;
 }
-.svq_video input + .svq_video_qualities {
+#svq_settings .svq_video input + .svq_video_qualities {
     border-color: transparent;
 }
-.svq_error {
+#svq_settings .svq_error {
 	color: tomato;
 }
 #svq_custom_html > label {
