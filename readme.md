@@ -57,7 +57,7 @@ Maybe your webserver doesn't support pseudo streaming over http. Ask your server
 
 At page load the plugin checks the types of html5 video your browser can play and then only the first supported file format is used.
 
-**Can I use more than one player on the same post/page? **
+**Can I use more than one player on the same post/page?**
 
 No, sorry, the plugin is meant to be used with only one player instance per post/page. But you can have multiple posts (each with Switch Video Quality activated) displayed on a page, e.g., if you query by a certain category or tag.
 
@@ -135,7 +135,7 @@ If you want to put it somewhere else, use the filter hook 'svq_locate_template'.
 	}
 
 
-###Screenshots
+### Screenshots
 ![Player, Playlist and Source Switcher](https://ps.w.org/switch-video-quality/assets/screenshot-1.png)
 
 *The player with the switch video quality button, the embed button, the optional info-overlay and the playlist (twenty-fifteen theme).*
