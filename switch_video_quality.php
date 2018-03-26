@@ -2,7 +2,7 @@
 /*
 Plugin Name: Switch Video Quality
 Description: Switch Video Quality adds quality switch functionality to the wordpress video player to let you choose between different resolutions of a (self-hosted) html5-compatible video.
-Version: 1.4.1
+Version: 1.5
 Author: Timo Klemm (team-ok)
 Text Domain: switch-video-quality
 Domain Path: /lang
@@ -25,7 +25,7 @@ function prowp_install() {
     }
 }
 //Switch Video Quality Version Number
-define( 'SVQ_VERSION', '1.4.1' );
+define( 'SVQ_VERSION', '1.5' );
 
 add_action( 'load-post.php', 'switch_video_quality_settings' );
 add_action( 'load-post-new.php', 'switch_video_quality_settings' );
@@ -62,12 +62,16 @@ function svq_admin_scripts() {
 		'reorderFields' => __('Reorder Fields', 'switch-video-quality'),
 		'url' => __('URL', 'switch-video-quality'),
 		'label' => __('Label', 'switch-video-quality'),
+		'lang' => __('Language Tag', 'switch-video-quality'),
+		'languageTags' => __('Find the right language tag', 'switch-video-quality'),
 		'duration' => __('Duration', 'switch-video-quality'),
 		'mmVideo' => __('Choose or upload video (multiple selection with cmd+click/ctrl+click)', 'switch-video-quality'),
 		'mmImage' => __('Choose or upload image', 'switch-video-quality'),
+		'mmSubtitle' => __('Choose or upload subtitle (multiple selection with cmd+click/ctrl+click)', 'switch-video-quality'),
 		'urlError' => __('The url you have entered is invalid/unreachable or the file type is not supported by your browser.', 'switch-video-quality')
 		) );
 }
+
 
 /************************************************************
 ******************HTML Output for Metaboxes******************
@@ -113,9 +117,34 @@ function svq_box_html($playlist_number, $cnt, $svq) { ?>
 				</div>
 				<div>
 					<label><?php _e('Text', 'switch-video-quality'); ?>
-						<input class="link_text_input" type="text" name="svq[<?php echo $cnt ?>][svq_ext_link][text]" value="<?php if (isset( $svq['svq_ext_link']['text'] ) ) echo esc_html($svq['svq_ext_link']['text']) ?>" size="30" />
+						<input class="link_text_input" type="text" name="svq[<?php echo $cnt ?>][svq_ext_link][text]" value="<?php if (isset( $svq['svq_ext_link']['text'] ) ) echo esc_html($svq['svq_ext_link']['text']) ?>" size="50" />
 					</label>
 				</div>
+			</div>
+			<div class="svq_subtitles svq_input_wrap">
+				<p><?php _e('Set subtitle file', 'switch-video-quality'); ?></p>
+				<input class="button svq_choose_subtitle" type="button" value="<?php _e('Choose/upload subtitle', 'switch-video-quality'); ?>" title="<?php _e('Open the media manager', 'switch-video-quality'); ?>" />
+				<input type="button" class="button svq_manual_entry" value="<?php _e('Add input fields', 'switch-video-quality'); ?>" title="<?php _e('Adds empty input fields for manual data entries', 'switch-video-quality'); ?>" />
+				<?php if (!empty( $svq['svq_subs'] ) ) {
+					$i = 0;
+					foreach ($svq['svq_subs'] as $svq_sub) { ?>
+						<div class="svq_subtitle">
+							<span class="svq_clear_input" title="<?php _e('Remove Fields', 'switch-video-quality'); ?>"></span>
+							<div>
+								<label><?php _e('Label', 'switch-video-quality'); ?><input class="svq_subtitle_label" required type="text" size="15" value="<?php echo $svq_sub['svq_label']; ?>" name="svq[<?php echo $cnt; ?>][svq_subs][<?php echo $i; ?>][svq_label]" /></label>
+							</div>
+							<div>
+								<label><?php _e('Language Tag', 'switch-video-quality'); ?><input class="svq_subtitle_lang" required type="text" size="5" value="<?php echo $svq_sub['svq_lang']; ?>" name="svq[<?php echo $cnt; ?>][svq_subs][<?php echo $i; ?>][svq_lang]" />
+									<a href="https://r12a.github.io/app-subtags/" rel="noopener noreferrer" target="_blank" title="<?php _e('Find the right language tag', 'switch-video-quality'); ?>"><span class="dashicons dashicons-info"></span></a>
+								</label>
+							</div>
+							<div>
+								<label><?php _e('URL', 'switch-video-quality'); ?><input class="svq_subtitle_src" type="text" size="80" value="<?php echo $svq_sub['svq_src']; ?>" name="svq[<?php echo $cnt; ?>][svq_subs][<?php echo $i; ?>][svq_src]" /></label>
+							</div>
+						</div>
+						<?php $i++;
+					} 
+				} ?>
 			</div>
 			<div class="svq_poster svq_input_wrap svq_clearfix">
 				<p><?php _e('Set poster image', 'switch-video-quality'); ?></p>
@@ -136,33 +165,33 @@ function svq_box_html($playlist_number, $cnt, $svq) { ?>
 			<div class="svq_video svq_input_wrap svq_clearfix">
 				<p><?php _e('Set video details', 'switch-video-quality'); ?></p>
 				<input type="button" class="button svq_choose_vid" value="<?php _e('Choose/upload videos', 'switch-video-quality'); ?>" title="<?php _e('Open the media manager', 'switch-video-quality'); ?>" />
-				<input type="button" class="button svq_vid_manual" value="<?php _e('Add input field', 'switch-video-quality'); ?>" title="<?php _e('Adds empty input field to set video url and label manually', 'switch-video-quality'); ?>" />
-				<?php $i = 0;
-					if (!empty( $svq['svq_video'] ) ) {
-						foreach ($svq['svq_video'] as $svq_video) { ?>
-							<div class="svq_video_qualities">
-								<span class="clear_video_input" title="<?php _e('Remove fields', 'switch-video-quality'); ?>"></span>
-								<div>
-									<label><?php _e('URL', 'switch-video-quality'); ?>
-										<input class="video_url_input" type="text" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_url]" value="<?php echo (!empty($svq_video['svq_url']) ? esc_url($svq_video['svq_url']) : ''); ?>" size="80" />
-									</label>
-								</div>
-								<div>
-									<label><?php _e('Label', 'switch-video-quality'); ?>
-										<input class="video_quality_label" type="text" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_label]" value="<?php echo (!empty($svq_video['svq_label']) ? esc_html($svq_video['svq_label']) : ''); ?>" size="5" />
-									</label>
-								</div>
-								<div>
-									<label><?php _e('Duration', 'switch-video-quality'); ?>
-										<input class="video_quality_duration" type="text" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_length]" value="<?php echo (!empty($svq_video['svq_length']) ? $svq_video['svq_length'] : ''); ?>" size="8" />
-									</label>
-								</div>
-								<input class="video_quality_mime" type="hidden" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_mime]" value="<?php echo (!empty($svq_video['svq_mime']) ? esc_attr($svq_video['svq_mime']) : ''); ?>" />
-								<input class="video_quality_order" type="hidden" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_order]" value="<?php echo (!empty($svq_video['svq_order']) ? esc_attr($svq_video['svq_order']) : ''); ?>" />
+				<input type="button" class="button svq_manual_entry" value="<?php _e('Add input fields', 'switch-video-quality'); ?>" title="<?php _e('Adds empty input fields for manual data entries', 'switch-video-quality'); ?>" />
+				<?php if (!empty( $svq['svq_video'] ) ) {
+					$i = 0;
+					foreach ($svq['svq_video'] as $svq_video) { ?>
+						<div class="svq_video_qualities">
+							<span class="svq_clear_input" title="<?php _e('Remove fields', 'switch-video-quality'); ?>"></span>
+							<div>
+								<label><?php _e('URL', 'switch-video-quality'); ?>
+									<input class="video_url_input" type="text" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_url]" value="<?php echo (!empty($svq_video['svq_url']) ? esc_url($svq_video['svq_url']) : ''); ?>" size="80" />
+								</label>
 							</div>
-						<?php $i++;
-						}
-					} ?>
+							<div>
+								<label><?php _e('Label', 'switch-video-quality'); ?>
+									<input class="video_quality_label" type="text" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_label]" value="<?php echo (!empty($svq_video['svq_label']) ? esc_html($svq_video['svq_label']) : ''); ?>" size="5" />
+								</label>
+							</div>
+							<div>
+								<label><?php _e('Duration', 'switch-video-quality'); ?>
+									<input class="video_quality_duration" type="text" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_length]" value="<?php echo (!empty($svq_video['svq_length']) ? $svq_video['svq_length'] : ''); ?>" size="8" />
+								</label>
+							</div>
+							<input class="video_quality_mime" type="hidden" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_mime]" value="<?php echo (!empty($svq_video['svq_mime']) ? esc_attr($svq_video['svq_mime']) : ''); ?>" />
+							<input class="video_quality_order" type="hidden" name="svq[<?php echo $cnt ?>][svq_video][<?php echo $i; ?>][svq_order]" value="<?php echo (!empty($svq_video['svq_order']) ? esc_attr($svq_video['svq_order']) : ''); ?>" />
+						</div>
+					<?php $i++;
+					}
+				} ?>
 			</div>
 		</div>
 	</div>
@@ -172,7 +201,8 @@ function print_svq_box( $post ) {
 	wp_nonce_field( basename( __FILE__ ), 'svq_box_nonce' );
 	$svq_stored_metadata = get_post_meta( $post->ID, 'svq_metadata', true );
 	$svq_custom_html = get_post_meta( $post->ID, 'svq_custom_html', true ); 
-	$svq_options = get_post_meta( $post->ID, 'svq_options', true);
+	$svq_options = (array) get_post_meta( $post->ID, 'svq_options', true);
+
 	$svq_options['show_svq_infooverlay'] = (isset($svq_options['show_svq_infooverlay']) ? $svq_options['show_svq_infooverlay'] : 'off');
 	$svq_options['svq_embed_active'] = (isset($svq_options['svq_embed_active']) ? $svq_options['svq_embed_active'] : false);
 	$svq_options['svq_active'] = (isset($svq_options['svq_active']) ? $svq_options['svq_active'] : 'off');
@@ -488,6 +518,11 @@ function svq_video_shortcode_output($output, $attr, $content, $instance){
 					$html .= '<source type="' . $quality['svq_mime'] . '" src="' . esc_url($quality['svq_url']) . '" title="' . $quality['svq_label'] . '" data-order="' . $quality['svq_order'] . '">';
 				}
 			}
+			if ( isset( $svq_stored_metadata[$svq_index]['svq_subs'] ) ){
+				foreach ($svq_stored_metadata[$svq_index]['svq_subs'] as $sub) {
+					$html .= '<track srclang="' . esc_attr($sub['svq_lang']) . '" label="' . esc_html($sub['svq_label']) . '" kind="subtitles" src="' . esc_url($sub['svq_src']) . '">';
+				}
+			}
 		}
 		$html .= '</video>';
 
@@ -520,8 +555,14 @@ function svq_video_shortcode_output($output, $attr, $content, $instance){
 		//enqueue frontend scripts
 		wp_enqueue_style( 'wp-mediaelement' );
 		wp_enqueue_script( 'wp-mediaelement' );
-		wp_enqueue_script( 'mejs_sourcechooser', plugins_url( 'js/mep-feature-sourcechooser.js', __FILE__ ), array('mediaelement'), SVQ_VERSION, true );
-		wp_enqueue_style( 'svq_css', plugins_url('css/svq.css',  __FILE__), array('wp-mediaelement'), SVQ_VERSION);	
+		if ( version_compare( get_bloginfo('version'), '4.9', '>=') ){
+			wp_enqueue_script( 'mejs_sourcechooser', plugins_url( 'js/mep-feature-sourcechooser-mejs-v4.js', __FILE__ ), array('mediaelement'), SVQ_VERSION, true );
+			wp_enqueue_style( 'mejs_sourcechooser', plugins_url('css/mejs-sourcechooser.css', __FILE__), array(), SVQ_VERSION );
+			wp_enqueue_style( 'svq_css', plugins_url('css/svq-mejs-v4.css',  __FILE__), array('wp-mediaelement'), SVQ_VERSION);
+		} else {
+			wp_enqueue_script( 'mejs_sourcechooser', plugins_url( 'js/mep-feature-sourcechooser.js', __FILE__ ), array('mediaelement'), SVQ_VERSION, true );
+			wp_enqueue_style( 'svq_css', plugins_url('css/svq.css',  __FILE__), array('wp-mediaelement'), SVQ_VERSION);
+		}	
 		if (isset($svq_options['show_svq_infooverlay']) ) {
 			wp_enqueue_script( 'mejs_svq_infooverlay', plugins_url( 'js/mep-feature-svq_infooverlay.js', __FILE__ ), array('mediaelement'), SVQ_VERSION, true );
 			$info_js++;
@@ -540,7 +581,10 @@ function svq_video_shortcode_output($output, $attr, $content, $instance){
 		if ($svq_instance === 1){
 			wp_localize_script( 'wp-mediaelement', '_wpmejsSettings',
 				array(
-					'features' => array('playpause','progress','volume', 'fullscreen', 'sourcechooser', 'svqinfooverlay', 'svqplaylist', 'svqembed')
+					'pluginPath' => includes_url( 'js/mediaelement/', 'relative' ),
+					'classPrefix' => 'mejs-',
+					'stretching' => 'responsive',
+					'features' => array('playpause','progress','volume', 'fullscreen', 'sourcechooser', 'svqinfooverlay', 'svqplaylist', 'svqembed', 'tracks')
 				)
 			);
 			wp_localize_script( 'mejs_sourcechooser', '_svqSettings',

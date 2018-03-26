@@ -2,6 +2,7 @@
     $.extend(MediaElementPlayer.prototype, {
     buildsvqembed: function(player, controls, layers, media) {
         var t = this;
+        media = player.$media[0];
         var curr_player = $('video.svq').index($(media));
         var svqIndex = 0;
         

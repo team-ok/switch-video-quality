@@ -6,9 +6,12 @@
     $.extend(MediaElementPlayer.prototype, {
         buildsourcechooser: function(player, controls, layers, media) {
             var t = this;
+            media = player.$media[0];
+
             if (!$(media).hasClass('svq')){
                 return false;
             }
+
             player.sourcechooserButton =
                 $('<div class="mejs-button mejs-sourcechooser-button">' +
                     '<button type="button" aria-controls="' + t.id + '" title="' + t.options.sourcechooserText + '"></button>' +
@@ -45,26 +48,26 @@
             });
             $(media).on('loadedmetadata', function(){
                 var currentQuality = this.videoHeight;
-                var backPos = '0 0';
-                if (currentQuality >= 720){
-                    backPos = '-16px 0';
-                    if (currentQuality >= 2160){
-                        backPos = '-32px 0';
-                    }
+                var buttonClass = 'mejs-button mejs-sourcechooser-button';
+                if (currentQuality >= 2160){
+                    buttonClass += ' uhd';
+                } else if (currentQuality >= 720){
+                        buttonClass += ' hd';
                 }
-                player.sourcechooserButton.find('button').css('background-position', backPos);
+                player.sourcechooserButton.removeClass().addClass(buttonClass);
             });
         // add to list at pageload     
         t.refresh_source_list();
     },
             refresh_source_list: function() {
             var t = this;
-            var curr_player = $('video.svq').index($(t.media));
+            var media = t.$media[0];
+            var curr_player = $('video.svq').index($(media));
             t.sourcechooserButton.find('ul').empty();
             //get sources from DOM
-            var sources = [].slice.call(t.media.children);
-            $(t.media).one('loadedmetadata', function() {
-                var curry = t.media.currentSrc;
+            var sources = [].slice.call(media.children);
+            $(media).one('loadedmetadata', function() {
+                var curry = media.currentSrc;
                 var playable;
                 //sort labels
                 sources.sort(function compare(a,b) {
@@ -77,7 +80,7 @@
                 
                 for (i in sources) {
                     src = sources[i];
-                        if (src.nodeName === 'SOURCE' && t.media.canPlayType(src.type)) {
+                        if (src.nodeName === 'SOURCE' && media.canPlayType(src.type)) {
                         //add sources of the first playable type only
                             if (playable !== undefined && src.type !== playable) {
                             continue;
