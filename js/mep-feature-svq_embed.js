@@ -100,8 +100,8 @@
         });
     }, generateEmbedCode: function(player, svqInstance, svqIndex, svqWidth, svqHeight){
         if (!svqWidth || !svqHeight){
-            svqWidth = $(player.media).width();
-            svqHeight = $(player.media).height();
+            svqWidth = player.$media[0].width;
+            svqHeight = player.$media[0].height;
         }
         var svqEmbedCode = '<iframe src="' + svq_embed_urls[svqInstance][svqIndex] + '&svq_width=' + svqWidth + '" width="' + svqWidth + '" height="' + svqHeight + '" frameborder="0" allowfullscreen></iframe>';
         player.svqEmbedLayer.find('textarea').val(svqEmbedCode).select();
