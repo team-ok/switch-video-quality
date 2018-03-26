@@ -17,20 +17,31 @@
     clear: both; 
 }
 .svq .mejs-controls .mejs-sourcechooser-button button {
-  background-image: url("../img/svq_controls.png");
+  background-image: url("../img/svq_control.png");
   background-position: 0 0;
 }
-.svq .mejs-controls .mejs-captions-button button {
-    background-position: -48px -2px;
-    height: 12px;
-    width: 15px;
-    margin-top: 9px;
+.svq .mejs-controls .mejs-sourcechooser-button::before {
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    background-color: crimson;
+    color: #fff;
+    z-index: 1;
+    padding: 1px 2px;
+    line-height: 1em;
+    font-size: 9px;
+    font-weight: bold;
+    margin-top: -5px;
+    text-shadow: 1px 0 0 #000;
 }
-.svq .mejs-controls .mejs-captions-button.mejs-captions-enabled button {
-    background-color: #0074a2;
+.svq .mejs-controls .mejs-sourcechooser-button.hd::before {
+    content: 'HD';
+}
+.svq .mejs-controls .mejs-sourcechooser-button.uhd::before {
+    content: '4K';
 }
 .svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector {
-    right: -26px;
+    visibility: hidden;
     width: auto;
     padding: 0;
     border: none;
@@ -38,10 +49,11 @@
 .svq .mejs-controls .mejs-captions-button .mejs-captions-selector {
   padding: 0;
   border: none;
+  margin-right: 0;
+  right: -10px;
 }
-/* always align overlay of the last control item to the right */
-.svq .mejs-controls > div:last-child > div {
-    right: 0 !important;
+.svq .mejs-captions-selector-list-item {
+  padding: 0;
 }
 .svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul {
     padding: 0 !important;
@@ -49,24 +61,15 @@
 }
 .svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li {
     margin: 0;
+    padding: 0;
     border-bottom: 2px solid #ccc;
 }
 .svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li:last-child {
     border: none;
 }
 .svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li label, .svq .mejs-controls .mejs-captions-button .mejs-captions-selector ul li label {
-  color: #fff;
-  font-size: 1em;
-  line-height: 1em;
-  width: 100%;
-  margin: 0;
-  text-align: left;
-}
-.svq .mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li label {
     width: 100%;
-    font-size: 1em;
-    line-height: 1em;
-    padding: 1.3em;
+    padding: 1em;
     margin: 0;
     text-align: left;
     -webkit-hyphens: none;
@@ -75,7 +78,7 @@
     hyphens: none;
 }
 .svq .mejs-controls .mejs-captions-button .mejs-captions-selector ul li label {
-    padding: 8px 5px;
+    padding: 8px;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     -ms-hyphens: auto;
@@ -87,7 +90,7 @@
 .svq .mejs-sourcechooser-selector input[type="radio"]:checked + label, .svq .mejs-captions-button input[type="radio"]:checked + label {
     background-color: #0074a2;
 }
-.svq .mejs-sourcechooser-selector label {
+.svq .mejs-sourcechooser-selector label, .svq .mejs-captions-selector label  {
   color: #fff;
 }
 .svq .mejs-sourcechooser-selector label > sup {

@@ -2,6 +2,7 @@
     $.extend(MediaElementPlayer.prototype, {
     buildsvqplaylist: function(player, controls, layers, media) {
         var t = this;
+        var media = player.$media[0];
         if (!$(media).hasClass('svq')){
             return false;
         }
@@ -28,14 +29,20 @@
             linkText = svq_ext_link['text'] || '',
             linkURL = svq_ext_link['url'] || '',
             svq_duration = svq_video[0].svq_length,
-            svq_poster = ($.isEmptyObject(svq_playlist_data[curr_player][index].svq_poster)) ? '' : svq_playlist_data[curr_player][index].svq_poster;
+            svq_poster = ($.isEmptyObject(svq_playlist_data[curr_player][index].svq_poster)) ? '' : svq_playlist_data[curr_player][index].svq_poster,
+            svq_subs = svq_playlist_data[curr_player][index].svq_subs || [];
 
-            //remove old sources from DOM
-            $(media).removeAttr('src').find('source').remove();
+            //remove old sources and subtitles from DOM
+            $(media).removeAttr('src').find('source, track').remove();
             //add new sources to DOM
             for (var i = 0; i < svq_video.length; i++) {
                     $(media).append('<source src="' + svq_video[i].svq_url + '" title="' + ($.isEmptyObject(svq_video[i].svq_label) ? '' : svq_video[i].svq_label) + '" type="' + svq_video[i].svq_mime + '" data-order="' + ($.isEmptyObject(svq_video[i].svq_order) ? '' : svq_video[i].svq_order)  + '"></source>');
-            };
+            }
+            for (var i = 0; i < svq_subs.length; i++) {
+                $(media).append('<track srclang="' + svq_subs[i].svq_lang + '" kind="subtitles" label="' + svq_subs[i].svq_label + '" src="' + svq_subs[i].svq_src + '">');
+            }
+            player.cleartracks(player);
+            player.rebuildtracks();
             //scroll to player
             $('html, body').animate({scrollTop: t.container.offset().top}, 'fast');
 

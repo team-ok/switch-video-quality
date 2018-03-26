@@ -1,10 +1,10 @@
 === Switch Video Quality ===
 Contributors: team-ok
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9ZJCWAFT4QF2
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9ZJCWAFT4QF2&lc=US
 Tags: change, choose, select, quality, resolution, self-hosted, video, stream, player, wordpress, media, library, playlist, responsive, embed, iframe, bitrate, HD, 4K, html5, mediaelement, mejs, svq
 Requires at least: 3.6
-Tested up to: 4.7.5
-Stable tag: 1.4.1
+Tested up to: 4.9
+Stable tag: 1.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,6 +18,7 @@ Switch Video Quality adds a quality switch button to the native wordpress video 
 * upload your video files directly to the wordpress media library or use a separate web server to host your files (direct URLs have to be entered manually)
 * create a **playlist** when you have more than one video on a page (only one player needed). The playlist is placed below the player as a grid layout with thumbnails for each video
 * provide an automatically generated **iframe embed code** for each video
+* use subtitles for multiple languages
 * reorder playlist items with **drag and drop**
 * **quality level labels** show the video's height value by default, but you can set custom ones easily
 * HD and 4K quality flags are added to the labels automatically
@@ -179,3 +180,6 @@ If you want to put it somewhere else, use the filter hook 'svq_locate_template'.
 = 1.4.1 =
 * Set priority of wp_video_shortcode_override filter hook to a higher value (lower priority).
 * Some minor CSS improvements.
+= 1.5 =
+* Fixed compatibility issues with WordPress 4.9
+* Added subtitle feature

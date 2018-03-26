@@ -20,31 +20,57 @@ jQuery(document).ready(function($) {
                 });
           });
       }
+
       function clear_item(tobeCleared) {
             tobeCleared.find('input[type="checkbox"]').prop('checked', false);
             tobeCleared.find('input[type="text"]').val('');
             tobeCleared.find('span.svq_accordion_label').text('');
             tobeCleared.find('div.svq_poster_thumb').remove();
+            tobeCleared.find('div.svq_subtitle').remove();
             tobeCleared.find('div.svq_video_qualities').remove();
       }
-      function input_html(curr_position, input_cnt){
-        var name_url = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_url]';
-        var name_label = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_label]';
-        var name_order = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_order]';
-        var name_mime = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_mime]';
-        var name_length = 'svq[' + (curr_position - 1) + '][svq_video][' + input_cnt + '][svq_length]';
+
+      function video_input_html(curr_position, input_cnt){
+        var name_url = 'svq[' + curr_position + '][svq_video][' + input_cnt + '][svq_url]';
+        var name_label = 'svq[' + curr_position + '][svq_video][' + input_cnt + '][svq_label]';
+        var name_order = 'svq[' + curr_position + '][svq_video][' + input_cnt + '][svq_order]';
+        var name_mime = 'svq[' + curr_position + '][svq_video][' + input_cnt + '][svq_mime]';
+        var name_length = 'svq[' + curr_position + '][svq_video][' + input_cnt + '][svq_length]';
         var html = 
           '<div class="svq_video_qualities">' + 
-          '<span class="clear_video_input" title="' + svq_admin_l10n.removeFields + '"></span>' +
-          '<br />' +
-          '<div><label>&nbsp;' + svq_admin_l10n.url + '&nbsp;<input class="video_url_input" type="text" size="80" value="" name="' + name_url + '" /></label></div>' +
-          '<div><label>&nbsp;' + svq_admin_l10n.label + '&nbsp;<input class="video_quality_label" type="text" size="5" value="" name="' + name_label  + '" /></label></div>' +
-          '<div><label>&nbsp;' + svq_admin_l10n.duration + '&nbsp;<input class="video_quality_duration" type="text" size="8" value="" name="' + name_length + '" /></label></div>' +
+          '<span class="svq_clear_input" title="' + svq_admin_l10n.removeFields + '"></span>' +
+          '<div><label>' + svq_admin_l10n.url + '<input class="video_url_input" type="text" size="80" value="" name="' + name_url + '" /></label></div>' +
+          '<div><label>' + svq_admin_l10n.label + '<input class="video_quality_label" type="text" size="5" value="" name="' + name_label  + '" /></label></div>' +
+          '<div><label>' + svq_admin_l10n.duration + '<input class="video_quality_duration" type="text" size="8" value="" name="' + name_length + '" /></label></div>' +
           '<input class="video_quality_mime" type="hidden" name="' + name_mime  + '" value="" />' +
           '<input class="video_quality_order" type="hidden" name="' + name_order + '" value="" />' +
           '</div>';
         return html;
       }
+
+      function subtitle_input_html(curr_position, input_cnt){
+        var name_label = 'svq[' + curr_position + '][svq_subs][' + input_cnt + '][svq_label]';
+        var name_lang = 'svq[' + curr_position + '][svq_subs][' + input_cnt + '][svq_lang]';
+        var name_src = 'svq[' + curr_position + '][svq_subs][' + input_cnt + '][svq_src]';
+        var html = 
+          '<div class="svq_subtitle">' +
+          	'<span class="svq_clear_input" title="' + svq_admin_l10n.removeFields + '"></span>' +
+          	'<div>'+
+          		'<label>' + svq_admin_l10n.label + '<input class="svq_subtitle_label" required type="text" size="15" value="" name="' + name_label  + '" /></label>' +
+          	'</div>' +
+          	'<div>' +
+          		'<label>' + svq_admin_l10n.lang + '<input class="svq_subtitle_lang" required type="text" size="5" value="" name="' + name_lang  + '" />' +
+          			'<a href="https://r12a.github.io/app-subtags/" rel="noopener noreferrer" target="_blank" title="'+svq_admin_l10n.languageTags+'"><span class="dashicons dashicons-info"></span></a>' +
+          		'</label>' +
+          	'</div>' +
+          	'<div>' +
+          		'<label>' + svq_admin_l10n.url + '<input class="svq_subtitle_src" type="text" size="80" value="" name="' + name_src  + '" /></label>' +
+          	'</div>' +
+          '</div>';
+
+        return html;
+      }
+
       // handle playlist item toolbar click events
       $('.add_svq_item').click(function(event) {
         event.stopPropagation();
@@ -56,11 +82,11 @@ jQuery(document).ready(function($) {
         update_playlist_position_number();
         var position = cloned.find('.svq_playlist_position').data('position') - 1;
         $('#svq_metabox_container').accordion('refresh').accordion('option', 'active', position).one('accordionactivate', function(){
-          console.log('Activated');
           $('html, body').animate({scrollTop: cloned.offset().top - admin_bar }, 'slow');
         });
         cnt++;
       });
+
       $('.remove_svq_item').on('click', function(event) {
         event.stopPropagation();
         tobeRemoved = $(this).closest('.svq_metabox');
@@ -73,18 +99,22 @@ jQuery(document).ready(function($) {
           $('span.remove_svq_item').css('display', 'none');  
         }
       });
+
       $('.clear_svq_item').click(function(event) {
         event.stopPropagation();
         var tobeCleared = $(this).closest('.svq_metabox');
         clear_item(tobeCleared);
       });
+
       $('.svq_playlist_position').on('click', function(event){
           event.stopPropagation();
       });
+
       $('input.svq_title_1').on('change', function(){
         var labelText = $(this).val();
         $(this).closest('.svq_metabox').find('.svq_accordion_label').text(labelText);
       });
+
       // drag&drop and accordion functionality
       $('#svq_metabox_container').sortable({
         opacity: 0.6,
@@ -95,12 +125,14 @@ jQuery(document).ready(function($) {
           update_playlist_position_number();
         }
       });
+
       $('#svq_metabox_container').accordion({
         header: '.svq_metabox_header',
         icons:  false,
         heightStyle: 'content',
         collapsible: true
       });
+
 // Video upload
     //variables have to be defined outside of the click-function for correct assignment when reopening the meta frame
     var meta_video_frame;
@@ -126,6 +158,7 @@ jQuery(document).ready(function($) {
             },
             multiple: true
         });
+
         // Runs when a video is selected
         meta_video_frame.on('select', function(){
             // Grabs the attachment selection and creates a JSON representation of the model
@@ -134,7 +167,7 @@ jQuery(document).ready(function($) {
             var input_cnt = vid_mamapapa.find('.video_url_input').length;
             // Creates video input fields and sends the attachment URL, height (as label and order number) and mime types to them
             $.each(media_attachment, function(index) {
-              var video_input = $(input_html(curr_position, input_cnt));
+              var video_input = $(video_input_html(curr_position - 1, input_cnt));
               video_input.find('.video_url_input').val(this.url);
               video_input.find('.video_quality_label').val(this.height + 'p');
               video_input.find('.video_quality_duration').val(this.fileLength);
@@ -147,11 +180,23 @@ jQuery(document).ready(function($) {
         // Opens the media library frame
         meta_video_frame.open();
     });
-  $('.svq_vid_manual').click(function() {
-      var curr_position = $(this).closest('div.svq_metabox').find('span.svq_playlist_position').data('position');
-      var input_cnt = $(this).parent().find('.video_url_input').length;
-      var video_input = input_html(curr_position, input_cnt);
-      $(video_input).appendTo( $(this).parent() );
+
+  $('.svq_manual_entry').click(function() {
+      var container = $(this).parent();
+      var curr_position = $(this).closest('div.svq_metabox').find('span.svq_playlist_position').data('position') - 1;
+      var input_cnt;
+      var new_input = '';
+      
+      if ( container.hasClass('svq_video') ){
+        input_cnt = container.find('.svq_video_qualities').length;
+        new_input = $( video_input_html(curr_position, input_cnt) );
+      } else if ( container.hasClass('svq_subtitles') ){
+        input_cnt = container.find('.svq_subtitle').length;
+        new_input = $( subtitle_input_html(curr_position, input_cnt) );
+      }
+      if ( new_input.length ) {
+        new_input.appendTo(container);
+      }
   });
 
 // get height and duration of video from its metadata (video has to be partially loaded)
@@ -169,6 +214,7 @@ jQuery(document).ready(function($) {
         wrapper.append('<p class="svq_error">'+svq_admin_l10n.urlError+'</p>');
       }
   }
+
 // get filetype from url
   function getFileType(url){
     var fileType = url.split('.').pop();
@@ -186,6 +232,7 @@ jQuery(document).ready(function($) {
         return 'invalid';
     }
   }
+
 // autofill fields when url is entered manually
   $('.svq_video').on('change', '.video_url_input', function(){
     var t = $(this);
@@ -213,7 +260,7 @@ jQuery(document).ready(function($) {
 
 
 // Clear video data input
-    $('.svq_metabox').on('click', 'span.clear_video_input', function() {
+    $('.svq_metabox').on('click', 'span.svq_clear_input', function() {
       var tobeCleared = $(this).parent();
       var vid_qual_boxes = tobeCleared.siblings('.svq_video_qualities');
       tobeCleared.remove();
@@ -264,5 +311,40 @@ jQuery(document).ready(function($) {
         });
         // Opens the media library frame
         meta_image_frame.open();
+    });
+
+
+// Subtitle upload
+    var meta_subtitle_frame;
+    var subtitle_url_input;
+
+     // Runs when the subtitle button is clicked
+    $('.svq_choose_subtitle').click(function(e){
+        e.preventDefault();
+        $container = $(this).closest('div.svq_subtitles');
+        curr_position = $container.closest('.svq_metabox').find('span.svq_playlist_position').data('position');
+        // If the frame already exists, re-open it
+        if (meta_subtitle_frame) {
+            meta_subtitle_frame.open();
+            return;
+        }
+        // Sets up the media library frame
+        meta_subtitle_frame = wp.media.frames.meta_subtitle_frame = wp.media({
+            title: svq_admin_l10n.mmSubtitle,
+            library: { type: 'text' },
+            multiple: true
+        });
+        // Runs when a subtitle is selected
+        meta_subtitle_frame.on('select', function(){
+            // Grabs the attachment selection and creates a JSON representation of the model
+            var media_attachment = meta_subtitle_frame.state().get('selection').toJSON();
+            $.each(media_attachment, function(index){
+                var subtitle_input = $( subtitle_input_html(curr_position - 1, index) );
+                subtitle_input.find('.svq_subtitle_src').val(this.url);
+                subtitle_input.appendTo($container);
+            });
+        });
+        // Opens the media library frame
+        meta_subtitle_frame.open();
     });
 });
