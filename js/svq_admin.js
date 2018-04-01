@@ -347,4 +347,10 @@ jQuery(document).ready(function($) {
         // Opens the media library frame
         meta_subtitle_frame.open();
     });
+
+    // autoselect svq shortcode and copy to clipboard
+    $('.svq-shortcode button').click( function(){
+      $(this).parent().find('input').focus().select();
+      document.execCommand('copy');
+    });
 });

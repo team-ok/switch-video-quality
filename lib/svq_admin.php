@@ -197,6 +197,9 @@ function print_svq_box( $post ) {
 <?php }
 
 function svq_shortcode_snippet($post){ ?>
-	<p><?php _e('Copy this shortcode and paste it into a post or page.', 'switch-video-quality'); ?></p>
-	<strong>[video svq="<?php echo $post->ID; ?>"]</strong>
+	<div class="svq-shortcode">
+		<label for="svq-<?php echo $post->ID; ?>"><?php _e('Copy this shortcode and paste it into a post or page.', 'switch-video-quality'); ?></label>
+		<p><strong><input id="svq-<?php echo $post->ID; ?>" type="text" value="[video svq=&quot;<?php echo $post->ID; ?>&quot;]"></strong></p>
+		<button type="button" class="button"><?php _e('Copy to clipboard', 'switch-video-quality'); ?></button>
+	</div>
 <?php }
