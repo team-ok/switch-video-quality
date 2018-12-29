@@ -183,3 +183,6 @@ If you want to put it somewhere else, use the filter hook 'svq_locate_template'.
 = 1.5 =
 * Fixed compatibility issues with WordPress 4.9
 * Added subtitle feature
+= 1.5.1 =
+* Fixed subtitle error related to WP 5.0 saving empty required input fields
+* CSS fixes (HD and 4K labels)
