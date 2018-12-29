@@ -131,10 +131,10 @@ function svq_box_html($playlist_number, $cnt, $svq) { ?>
 						<div class="svq_subtitle">
 							<span class="svq_clear_input" title="<?php _e('Remove Fields', 'switch-video-quality'); ?>"></span>
 							<div>
-								<label><?php _e('Label', 'switch-video-quality'); ?><input class="svq_subtitle_label" required type="text" size="15" value="<?php echo $svq_sub['svq_label']; ?>" name="svq[<?php echo $cnt; ?>][svq_subs][<?php echo $i; ?>][svq_label]" /></label>
+								<label><?php _e('Label', 'switch-video-quality'); ?><input class="svq_subtitle_label" required type="text" size="15" value="<?php echo isset($svq_sub['svq_label']) ? $svq_sub['svq_label'] : ''; ?>" name="svq[<?php echo $cnt; ?>][svq_subs][<?php echo $i; ?>][svq_label]" /></label>
 							</div>
 							<div>
-								<label><?php _e('Language Tag', 'switch-video-quality'); ?><input class="svq_subtitle_lang" required type="text" size="5" value="<?php echo $svq_sub['svq_lang']; ?>" name="svq[<?php echo $cnt; ?>][svq_subs][<?php echo $i; ?>][svq_lang]" />
+								<label><?php _e('Language Tag', 'switch-video-quality'); ?><input class="svq_subtitle_lang" required type="text" size="5" value="<?php echo isset($svq_sub['svq_lang']) ? $svq_sub['svq_lang'] : ''; ?>" name="svq[<?php echo $cnt; ?>][svq_subs][<?php echo $i; ?>][svq_lang]" />
 									<a href="https://r12a.github.io/app-subtags/" rel="noopener noreferrer" target="_blank" title="<?php _e('Find the right language tag', 'switch-video-quality'); ?>"><span class="dashicons dashicons-info"></span></a>
 								</label>
 							</div>
@@ -520,7 +520,9 @@ function svq_video_shortcode_output($output, $attr, $content, $instance){
 			}
 			if ( isset( $svq_stored_metadata[$svq_index]['svq_subs'] ) ){
 				foreach ($svq_stored_metadata[$svq_index]['svq_subs'] as $sub) {
-					$html .= '<track srclang="' . esc_attr($sub['svq_lang']) . '" label="' . esc_html($sub['svq_label']) . '" kind="subtitles" src="' . esc_url($sub['svq_src']) . '">';
+					if ( isset( $sub['svq_lang'] ) && isset( $sub['svq_label'] ) && isset( $sub['svq_src'] ) ){
+						$html .= '<track srclang="' . esc_attr($sub['svq_lang']) . '" label="' . esc_html($sub['svq_label']) . '" kind="subtitles" src="' . esc_url($sub['svq_src']) . '">';
+					}
 				}
 			}
 		}
