@@ -25,7 +25,7 @@ function prowp_install() {
     }
 }
 //Switch Video Quality Version Number
-define( 'SVQ_VERSION', '1.5' );
+define( 'SVQ_VERSION', '1.51' );
 
 add_action( 'load-post.php', 'switch_video_quality_settings' );
 add_action( 'load-post-new.php', 'switch_video_quality_settings' );
