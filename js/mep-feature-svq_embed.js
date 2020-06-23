@@ -2,11 +2,10 @@
     $.extend(MediaElementPlayer.prototype, {
     buildsvqembed: function(player, controls, layers, media) {
         var t = this;
-        media = player.$media[0];
-        var curr_player = $('video.svq').index($(media));
+        var curr_player = $('video.svq').index(t.node);
         var svqIndex = 0;
         
-        if (!$(media).hasClass('svq') || !svq_options[curr_player].svq_embed_active) {
+        if (!$(t.node).hasClass('svq') || !svq_options[curr_player].svq_embed_active) {
             return false;
         }
         player.svqEmbedLayer = $(

@@ -5,9 +5,8 @@
         
         buildsvqinfooverlay: function(player, controls, layers, media) {
           var t = this;
-          media = player.$media[0];
-          var curr_player = $('video.svq').index($(media));
-          if (!$(media).hasClass('svq') || svq_options[curr_player].show_svq_infooverlay != 'on') {
+          var curr_player = $('video.svq').index(t.node);
+          if (!$(t.node).hasClass('svq') || svq_options[curr_player].show_svq_infooverlay != 'on') {
                 return false;
           }
           var index = _svqInfoSettings.svqIndex;

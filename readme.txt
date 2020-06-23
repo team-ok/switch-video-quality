@@ -3,8 +3,8 @@ Contributors: team-ok
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9ZJCWAFT4QF2&lc=US
 Tags: change, choose, select, quality, resolution, self-hosted, video, stream, player, wordpress, media, library, playlist, responsive, embed, iframe, bitrate, HD, 4K, html5, mediaelement, mejs, svq
 Requires at least: 3.6
-Tested up to: 5.3.2
-Stable tag: 1.5.3
+Tested up to: 5.4.1
+Stable tag: 1.5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -190,3 +190,5 @@ If you want to put it somewhere else, use the filter hook 'svq_locate_template'.
 * Fixed the "A non-numeric value encountered"-warning (only PHP >= 7.1) that was displayed when using shortcode attributes with non-numeric values where numeric values were expected.
 = 1.5.3 =
 * Fixed compatability issues with manually entered video urls that don't end with a file extension. Now mp4-MIME type is assumed in this cases.
+= 1.5.4 =
+* Fixed JavaScript errors in Safari that caused SVQ to stop working.

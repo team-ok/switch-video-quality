@@ -6,9 +6,8 @@
     $.extend(MediaElementPlayer.prototype, {
         buildsourcechooser: function(player, controls, layers, media) {
             var t = this;
-            media = player.$media[0];
 
-            if (!$(media).hasClass('svq')){
+            if (!$(t.node).hasClass('svq')){
                 return false;
             }
 
@@ -57,37 +56,40 @@
                 player.sourcechooserButton.removeClass().addClass(buttonClass);
             });
         // add to list at pageload     
-        t.refresh_source_list();
+        t.refresh_source_list(player, media, 0);
     },
-            refresh_source_list: function() {
-            var t = this;
-            var media = t.$media[0];
-            var curr_player = $('video.svq').index($(media));
+            refresh_source_list: function(player, media, index) {
+            var t = player;
+            var curr_player = $('video.svq').index(t.node);
+            var svq_video = svq_playlist_data[curr_player][index].svq_video;
+            
             t.sourcechooserButton.find('ul').empty();
-            //get sources from DOM
-            var sources = [].slice.call(media.children);
+
+            if (svq_video.length <= 0) {
+            	return;
+            }
             $(media).one('loadedmetadata', function() {
                 var curry = media.currentSrc;
                 var playable;
                 //sort labels
-                sources.sort(function compare(a,b) {
+                svq_video.sort(function compare(a,b) {
                     if (svq_options[curr_player].svq_sort_qualities == 'asc'){
-                        return parseInt(b.dataset.order, 10) - parseInt(a.dataset.order, 10);
+                        return parseInt(b.svq_order, 10) - parseInt(a.svq_order, 10);
                     } else {
-                        return parseInt(a.dataset.order, 10) - parseInt(b.dataset.order, 10);
+                        return parseInt(a.svq_order, 10) - parseInt(b.svq_order, 10);
                     }
                 });
                 
-                for (i in sources) {
-                    src = sources[i];
-                        if (src.nodeName === 'SOURCE' && media.canPlayType(src.type)) {
-                        //add sources of the first playable type only
-                            if (playable !== undefined && src.type !== playable) {
-                            continue;
-                            }
-                            t.addSourceButton(src.src, src.title, src.dataset.order, curry == src.src, i);
-                            playable = src.type;
+                for (i in svq_video) {
+                    var src = svq_video[i];
+                    if (src.svq_mime !== undefined && typeof media.canPlayType === 'function') {
+                    //add sources of the first playable type only
+                        if (playable !== undefined && src.svq_mime !== playable) {
+                        continue;
                         }
+                        t.addSourceButton(src.svq_url, src.svq_label, src.svq_order, curry == src.svq_url, i);
+                        playable = src.svq_mime;
+                    }
                 }
             });
     },
