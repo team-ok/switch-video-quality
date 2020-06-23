@@ -2,7 +2,7 @@
 /*
 Plugin Name: Switch Video Quality
 Description: Switch Video Quality adds quality switch functionality to the wordpress video player to let you choose between different resolutions of a (self-hosted) html5-compatible video.
-Version: 1.5.1
+Version: 1.5.2
 Author: Timo Klemm (team-ok)
 Text Domain: switch-video-quality
 Domain Path: /lang
@@ -25,7 +25,7 @@ function prowp_install() {
     }
 }
 //Switch Video Quality Version Number
-define( 'SVQ_VERSION', '1.5.1' );
+define( 'SVQ_VERSION', '1.5.2' );
 
 add_action( 'load-post.php', 'switch_video_quality_settings' );
 add_action( 'load-post-new.php', 'switch_video_quality_settings' );
@@ -436,18 +436,18 @@ function svq_video_shortcode_output($output, $attr, $content, $instance){
 		}
 		// if the height attribute is missing, set it automatically (assuming the video has a 16:9 aspect ratio)
 		if ( empty($atts['height']) ){
-			$atts['height'] = round($atts['width'] * 0.5625);
+			$atts['height'] = round( (int) $atts['width'] * 0.5625);
 		}
 
 		// if the video is bigger than the theme
-		if ( !$is_svq_embed && !empty( $content_width ) && $atts['width'] > $content_width ) {
-			$atts['height'] = round( ( $atts['height'] * $content_width ) / $atts['width'] );
-			$atts['width'] = $content_width;
+		if ( !$is_svq_embed && !empty( $content_width ) && (int) $atts['width'] > (int) $content_width ) {
+			$atts['height'] = round( ( (int) $atts['height'] * (int) $content_width ) / (int) $atts['width'] );
+			$atts['width'] = (int) $content_width;
 		}
 		// find the quality that is closest to the player's height, but not smaller than it (to avoid upscaling)
 		// and set it as default
 		foreach ($svq_stored_metadata as &$svq){
-			$reference = ($def_qual !== null ? absint($def_qual) : $atts['height']);
+			$reference = ($def_qual !== null ? absint( $def_qual ) : $atts['height']);
   			$init_qual = null;
   			$init_index = 0;
   			if ( !empty($svq['svq_video']) ){
@@ -460,11 +460,11 @@ function svq_video_shortcode_output($output, $attr, $content, $instance){
 					// set the first file as initial quality
 					if ($init_qual === null
 						// or if the initial file's is smaller than the player's height and the next file is greater than it, set the next file as initial quality
-						|| ( $init_qual < $reference && $reference <= $quality['svq_order'] )
+						|| ( (int) $init_qual < (int) $reference && (int) $reference <= (int) $quality['svq_order'] )
 						// or if the next file's height is closer to and not smaller than the player's height, set it as initial quality
-						|| ( abs( $reference - $init_qual ) > abs( $quality['svq_order'] - $reference ) && $quality['svq_order'] >= $reference ) 
+						|| ( abs( (int) $reference - (int) $init_qual ) > abs( (int) $quality['svq_order'] - (int) $reference ) && (int) $quality['svq_order'] >= (int) $reference ) 
 					) {
-		    			$init_qual = $quality['svq_order'];
+		    			$init_qual = (int) $quality['svq_order'];
 	        			$init_index = $key;
 		    		}
 				}

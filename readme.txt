@@ -3,8 +3,8 @@ Contributors: team-ok
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9ZJCWAFT4QF2&lc=US
 Tags: change, choose, select, quality, resolution, self-hosted, video, stream, player, wordpress, media, library, playlist, responsive, embed, iframe, bitrate, HD, 4K, html5, mediaelement, mejs, svq
 Requires at least: 3.6
-Tested up to: 5.0.2
-Stable tag: 1.5.1
+Tested up to: 5.3.2
+Stable tag: 1.5.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -27,8 +27,8 @@ Switch Video Quality adds a quality switch button to the native wordpress video 
 * fully translatable (english and german language files already included)
 
 = How to use: =
-* In the post editor, use the normal video shortcode (width and height set to your needs) to place the video player in your content area, like this:
-`[video width="1024" height="576"]`
+* In the post editor, use the normal video shortcode (width and height set to your needs) to place the video player in your content area, like this: 
+`[video width=1024 height=576]`
 * There are no other shortcode attributes necessary (actually even width and height aren't necessary as they default to 640 x 480 px when they are omitted), but you may add a src and a poster attribute to ensure normal shortcode functionality when Switch Video Quality is not used or deactivated.
 * Select the checkbox *Turn on/off* to activate the plugin for the current post.
 * In the playlist item box enter some information about your video such as titles, names, locations, dates or an external link. This information will be displayed in the playlist and in the information overlay of the video player.
@@ -186,3 +186,5 @@ If you want to put it somewhere else, use the filter hook 'svq_locate_template'.
 = 1.5.1 =
 * Fixed subtitle error related to WP 5.0 saving empty required input fields
 * CSS fixes (HD and 4K labels)
+= 1.5.2 =
+* Fixed the "A non-numeric value encountered"-warning (only PHP >= 7.1) that was displayed when using shortcode attributes with non-numeric values where numeric values were expected.
