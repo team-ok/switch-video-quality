@@ -219,9 +219,6 @@ jQuery(document).ready(function($) {
   function getFileType(url){
     var fileType = url.split('.').pop();
     switch (fileType) {
-      case 'mp4':
-        return 'video/mp4';
-        break;
       case 'webm':
         return 'video/webm';
         break;
@@ -229,7 +226,7 @@ jQuery(document).ready(function($) {
         return 'video/ogg';
         break;
       default:
-        return 'invalid';
+        return 'video/mp4';
     }
   }
 
@@ -241,20 +238,16 @@ jQuery(document).ready(function($) {
     wrapper.find('.svq_error').remove();
     if ($.trim(url).length > 0) {
       var fileType = getFileType(url);
-      if (fileType == 'invalid'){
-        wrapper.append('<p class="svq_error">'+svq_admin_l10n.urlError+'</p>');
-      } else {
-        getVideoHeight(wrapper, url, function(h,d){
-          wrapper.find('.video_quality_order').val(h);
-          wrapper.find('.video_quality_label').val(h + 'p');
-          var hours = Math.floor(d / 3600);
-          var minutes = Math.floor(d % 3600 / 60);
-          var seconds = Math.round(d % 60);
-          var duration = (hours > 0 ? hours + ':' : '') + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
-          wrapper.find('.video_quality_duration').val(duration);
-        });
-        wrapper.find('input.video_quality_mime').val(fileType);
-      }
+      getVideoHeight(wrapper, url, function(h,d){
+        wrapper.find('.video_quality_order').val(h);
+        wrapper.find('.video_quality_label').val(h + 'p');
+        var hours = Math.floor(d / 3600);
+        var minutes = Math.floor(d % 3600 / 60);
+        var seconds = Math.round(d % 60);
+        var duration = (hours > 0 ? hours + ':' : '') + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+        wrapper.find('.video_quality_duration').val(duration);
+      });
+      wrapper.find('input.video_quality_mime').val(fileType);
     }
   });
 
