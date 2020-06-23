@@ -45,7 +45,7 @@
                     });
                 }
             });
-            $(media).on('loadedmetadata', function(){
+            $(t.node).on('loadedmetadata', function(){
                 var currentQuality = this.videoHeight;
                 var buttonClass = 'mejs-button mejs-sourcechooser-button';
                 if (currentQuality >= 2160){

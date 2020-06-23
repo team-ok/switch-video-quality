@@ -2,7 +2,7 @@
 /*
 Plugin Name: Switch Video Quality
 Description: Switch Video Quality adds quality switch functionality to the wordpress video player to let you choose between different resolutions of a (self-hosted) html5-compatible video.
-Version: 1.5.4
+Version: 1.5.5
 Author: Timo Klemm (team-ok)
 Text Domain: switch-video-quality
 Domain Path: /lang
@@ -25,7 +25,7 @@ function prowp_install() {
     }
 }
 //Switch Video Quality Version Number
-define( 'SVQ_VERSION', '1.5.4' );
+define( 'SVQ_VERSION', '1.5.5' );
 
 add_action( 'load-post.php', 'switch_video_quality_settings' );
 add_action( 'load-post-new.php', 'switch_video_quality_settings' );
